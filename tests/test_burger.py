@@ -71,13 +71,17 @@ class TestBurger:
         burger.add_ingredient(ingredient1)
         burger.add_ingredient(ingredient2)
 
-        receipt = burger.get_receipt()
-
-        assert receipt.count("Sesame Bun") == 2
-        assert "= sauce Ketchup =" in receipt
-        assert "= filling Beef =" in receipt
         expected_price = 2 * 100 + 20 + 200
-        assert f"Price: {expected_price}" in receipt
+        expected_receipt = (
+            "(==== Sesame Bun ====)\n"
+            "= sauce Ketchup =\n"
+            "= filling Beef =\n"
+            "(==== Sesame Bun ====)\n\n"
+            "Price: 420"
+        )
+        actual_receipt = burger.get_receipt()
+
+        assert actual_receipt == expected_receipt
 
     # проверка, что remove_ingredient вызывает исключение IndexError при неверном индексе
     def test_remove_ingredient_invalid_index_raises(self, burger):
